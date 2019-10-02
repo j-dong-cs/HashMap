@@ -11,8 +11,11 @@ namespace HashMap
     public class HashMap<TKey, TValue> : IDictionary<TKey, TValue>
     {
         private static double MAX_LOAD = 0.75; // load factor for rehashing
+        private static bool READ_ONLY = false; // default set HashMap not to be read-only
 
         private Node[] elements;
+        private ICollection<TKey> keys;
+        private ICollection<TValue> values;
         private int size;
 
         // Default construction: construct an empty HashMap
@@ -20,9 +23,56 @@ namespace HashMap
         {
             elements = new Node[10];
             size = 0;
+            keys = new List<TKey>();
+            values = new List<TValue>();
         }
 
-        // Remove all the key/value pairs in the hashmap
+        // Accessor of how many pairs of key/value in HashMap
+        public int Count
+        {
+            get { return size; }
+        }
+
+        // Get accessor of retrieving all keys in HashMap
+        public ICollection<TKey> Keys
+        {
+            get { return keys; }
+        }
+
+        // Get accessor of retrieving all values in HashMap
+        public ICollection<TValue> Values
+        {
+            get { return values; }
+        }
+
+        // Get and set accessor of the value corresponding to given key 
+        public TValue this[TKey key]
+        {
+            get
+            {
+                TValue value;
+                if (TryGetValue(key, out value))
+                {
+                    return value;
+                } else
+                {
+                    return default(TValue);
+                }
+            }
+
+            set
+            {
+                this.Add(key, value);
+            }
+        }
+
+        // Get accessor of whether the HashMap is read-only or not
+        public bool IsReadOnly
+        {
+            get { return READ_ONLY; }
+        }
+
+        // Remove all the key/value pairs in the HashMap
         public void Clear()
         {
             for (int i = 0; i < elements.Length; i++)
@@ -33,6 +83,8 @@ namespace HashMap
                 }
             }
             size = 0;
+            keys.Clear();
+            values.Clear();
         }
 
         // Pre: The key passed in shoule not be null; otherwise, throws an NullReferenceException
@@ -90,6 +142,8 @@ namespace HashMap
                 current.next = elements[h];
                 elements[h] = current;
                 size++;
+                keys.Add(key);
+                values.Add(value);
             } else // update value
             {
                 current = elements[h];
@@ -98,6 +152,8 @@ namespace HashMap
                     current = current.next;
                 }
                 current.value = value;
+                values.Remove(value);
+                values.Add(value);
             }
             // resize to a bigger size array if needed
             if (Convert.ToDouble(size) / elements.Length > MAX_LOAD)
@@ -116,11 +172,58 @@ namespace HashMap
                 int h = Hash(key);
                 if (elements[h] != null && elements[h].key.Equals(key))
                 {
+                    keys.Remove(key);
+                    values.Remove(elements[h].value);
                     elements[h] = elements[h].next;
+                    size--;
+                    return true;
+                } else
+                {
+                    Node current = elements[h];
+                    while (current.next != null)
+                    {
+                        if (current.next.key.Equals(key))
+                        {
+                            keys.Remove(key);
+                            values.Remove(current.next.value);
+                            current.next = current.next.next;
+                            size--;
+                            return true;
+                        }
+                        current = current.next;
+                    }
                 }
-                return true;
             }
             return false;
+        }
+
+        // Returns a string representation of the HashMap's elements
+        override
+        public string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{");
+            for (int i = 0; i < elements.Length; i++)
+            {
+                if (elements[i] != null)
+                {
+                    Node current = elements[i];
+                    while (current.next != null)
+                    {
+                        sb.Append(current.key);
+                        sb.Append("=");
+                        sb.Append(current.value);
+                        sb.Append(", ");
+                        current = current.next;
+                    }
+                    sb.Append(current.key);
+                    sb.Append("=");
+                    sb.Append(current.value);
+                    sb.Append(", ");
+                }
+            }
+            sb.Append("}");
+            return sb.ToString();
         }
 
         // The method represent a hash funtion which maps key to corresponding index
