@@ -8,7 +8,7 @@ namespace HashMap
 {
     // A HashMap object represents a set of pairs of keys mapping to values 
     // using Dictionary as internal structure.
-    public class HashMap<TKey, TValue> : IDictionary<TKey, TValue>
+    public class HashMap<TKey, TValue>
     {
         private static double MAX_LOAD = 0.75; // load factor for rehashing
         private static bool READ_ONLY = false; // default set HashMap not to be read-only
@@ -224,7 +224,7 @@ namespace HashMap
             }
             sb.Append("}");
             return sb.ToString();
-        }
+        }        
 
         // The method represent a hash funtion which maps key to corresponding index
         private int Hash(TKey key)
@@ -270,6 +270,7 @@ namespace HashMap
             {
                 this.key = key;
                 this.value = value;
+                next = null;
             }
         }
 
