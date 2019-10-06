@@ -11,18 +11,18 @@ namespace HashMap
     public class HashMap<TKey, TValue>
     {
         private static double MAX_LOAD = 0.75; // load factor for rehashing
-        private static bool READ_ONLY = false; // default set HashMap not to be read-only
+        private static int DEFAULT_LENGTH = 10; // default LENGTH for HashMap
 
         private Node[] elements;
         private ICollection<TKey> keys;
         private ICollection<TValue> values;
-        private int size;
+        private int count;
 
         // Default construction: construct an empty HashMap
         public HashMap()
         {
-            elements = new Node[10];
-            size = 0;
+            elements = new Node[DEFAULT_LENGTH];
+            count = 0;
             keys = new List<TKey>();
             values = new List<TValue>();
         }
@@ -30,7 +30,7 @@ namespace HashMap
         // Accessor of how many pairs of key/value in HashMap
         public int Count
         {
-            get { return size; }
+            get { return count; }
         }
 
         // Get accessor of retrieving all keys in HashMap
@@ -66,23 +66,14 @@ namespace HashMap
             }
         }
 
-        // Get accessor of whether the HashMap is read-only or not
-        public bool IsReadOnly
-        {
-            get { return READ_ONLY; }
-        }
-
         // Remove all the key/value pairs in the HashMap
         public void Clear()
         {
             for (int i = 0; i < elements.Length; i++)
             {
-                if (elements[i] == null)
-                {
-                    elements[i] = null;
-                }
+                elements[i] = null;
             }
-            size = 0;
+            count = 0;
             keys.Clear();
             values.Clear();
         }
@@ -121,7 +112,7 @@ namespace HashMap
         // Returns true if the HashMap does not have any key/value pair; otherwise, return false.
         public bool IsEmpty()
         {
-            return size == 0;
+            return count == 0;
         }
         
 
@@ -135,31 +126,24 @@ namespace HashMap
                 throw new NullReferenceException();
             }
             int h = Hash(key);
-            Node current;
-            if (!TryGetValue(key, out value)) // add new key/value pair
-            {
-                current = new Node(key, value);
-                current.next = elements[h];
-                elements[h] = current;
-                size++;
-                keys.Add(key);
-                values.Add(value);
-            } else // update value
-            {
-                current = elements[h];
-                while (current.next != null && !current.key.Equals(key))
+            Node newNode = new Node(key, value);
+            Node current = elements[h];
+            while (current != null)
+            {   
+                if (current.key.Equals(key)) // update existing key's value
                 {
-                    current = current.next;
+                    current.value = value;
+                    return; // stop after updating the value corresponding to given key
                 }
-                current.value = value;
-                values.Remove(value);
-                values.Add(value);
+                current = current.next;
             }
+            // no existing key, add newNode to the front
+            newNode.next = elements[h];
+            elements[h] = newNode;
+            count++;
+
             // resize to a bigger size array if needed
-            if (Convert.ToDouble(size) / elements.Length > MAX_LOAD)
-            {
-                Rehash();
-            }
+            if (Convert.ToDouble(count) / elements.Length > MAX_LOAD) Rehash();
         }
 
         // Pre: the key passed in should not be null; otherwise, throws an NullReferencePointer.
@@ -167,31 +151,27 @@ namespace HashMap
         public bool Remove(TKey key)
         {
             NullExceptionHelper(key);
-            if (ContainsKey(key))
+            int h = Hash(key);
+            if (elements[h] == null) return false;
+            // remove the front node
+            if (elements[h].key.Equals(key))
             {
-                int h = Hash(key);
-                if (elements[h] != null && elements[h].key.Equals(key))
+                elements[h] = elements[h].next;
+                count--;
+                return true;
+            }
+            else // check the rest list
+            {
+                Node current = elements[h];
+                while (current.next != null)
                 {
-                    keys.Remove(key);
-                    values.Remove(elements[h].value);
-                    elements[h] = elements[h].next;
-                    size--;
-                    return true;
-                } else
-                {
-                    Node current = elements[h];
-                    while (current.next != null)
+                    if (current.next.key.Equals(key))
                     {
-                        if (current.next.key.Equals(key))
-                        {
-                            keys.Remove(key);
-                            values.Remove(current.next.value);
-                            current.next = current.next.next;
-                            size--;
-                            return true;
-                        }
-                        current = current.next;
+                        current.next = current.next.next;
+                        count--;
+                        return true;
                     }
+                    current = current.next;
                 }
             }
             return false;
@@ -229,7 +209,7 @@ namespace HashMap
         // The method represent a hash funtion which maps key to corresponding index
         private int Hash(TKey key)
         {
-            return Math.Abs(key.GetHashCode() % elements.Length);
+            return Math.Abs(key.GetHashCode()) % elements.Length;
         }
         
 
