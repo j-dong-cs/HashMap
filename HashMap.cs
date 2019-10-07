@@ -233,6 +233,7 @@ namespace HashMap
             Node[] twoTimesElements = new Node[2 * elements.Length];
             Node[] temp = elements;
             this.elements = twoTimesElements;
+            count = 0;
             foreach (Node index in temp)
             {
                 Node current = index;
