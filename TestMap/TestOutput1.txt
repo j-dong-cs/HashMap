@@ -1,0 +1,90 @@
+HashMap Test Program #1:
+The exact order of your map may differ from the expected output, but you should have the same
+overall collection of key/value pairs.
+
+Test Add(TKey):
+after adding  42, map = { (42->boo42) }, count = 1
+after adding  29, map = { (42->boo42) (29->boo29) }, count = 2
+after adding  42, map = { (42->boo42) (29->boo29) }, count = 2
+after adding  17, map = { (42->boo42) (17->boo17) (29->boo29) }, count = 3
+after adding 112, map = { (112->boo112) (42->boo42) (17->boo17) (29->boo29) }, count = 4
+after adding  -9, map = { (112->boo112) (42->boo42) (17->boo17) (-9->boo-9) (29->boo29) }, count = 5
+after adding  17, map = { (112->boo112) (42->boo42) (17->boo17) (-9->boo-9) (29->boo29) }, count = 5
+after adding  82, map = { (82->boo82) (112->boo112) (42->boo42) (17->boo17) (-9->boo-9) (29->boo29) }, count = 6
+after adding  53, map = { (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) }, count = 7
+
+Test ContainsKey(TKey):
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey( 42)? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey( 29)? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey( 42)? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey( 17)? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey(112)? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey( -9)? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey( 17)? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey( 82)? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey( 53)? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey( 55)? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey(182)? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey(-91)? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey(888)? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey( 72)? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey( 33)? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey(999)? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } ContainsKey(-17)? False
+
+Test Keys:
+Keys = { 82 112 42 53 17 -9 29 }
+Test TryGetValue(TKey, TValue):
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue( 42) -> boo42) ? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue( 29) -> boo29) ? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue( 42) -> boo42) ? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue( 17) -> boo17) ? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue(112) -> boo112) ? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue( -9) -> boo-9) ? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue( 17) -> boo17) ? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue( 82) -> boo82) ? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue( 53) -> boo53) ? True
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue( 55) -> ) ? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue(182) -> ) ? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue(-91) -> ) ? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue(888) -> ) ? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue( 72) -> ) ? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue( 33) -> ) ? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue(999) -> ) ? False
+{ (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) } TryGetValue(-17) -> ) ? False
+
+Test Remove(TKey):
+after removing  55, map = { (82->boo82) (112->boo112) (42->boo42) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) }, size = 7, ContainsKey(55)? False
+after removing  42, map = { (82->boo82) (112->boo112) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) }, size = 6, ContainsKey(42)? False
+after removing 182, map = { (82->boo82) (112->boo112) (53->boo53) (17->boo17) (-9->boo-9) (29->boo29) }, size = 6, ContainsKey(182)? False
+after removing  17, map = { (82->boo82) (112->boo112) (53->boo53) (-9->boo-9) (29->boo29) }, size = 5, ContainsKey(17)? False
+after removing -91, map = { (82->boo82) (112->boo112) (53->boo53) (-9->boo-9) (29->boo29) }, size = 5, ContainsKey(-91)? False
+after removing  82, map = { (112->boo112) (53->boo53) (-9->boo-9) (29->boo29) }, size = 4, ContainsKey(82)? False
+
+after adding  22, map = { (22->foo) (112->boo112) (53->boo53) (-9->boo-9) (29->boo29) }, size = 5, ContainsKey(22)? True
+
+Test Add with many elements:
+after adding    33, map = { (22->foo) (112->boo112) (33->foo33) (53->boo53) (-9->boo-9) (29->boo29) }, size = 6, ContainsKey(33)? True
+after adding    56, map = { (22->foo) (112->boo112) (33->foo33) (53->boo53) (56->foo56) (-9->boo-9) (29->boo29) }, size = 7, ContainsKey(56)? True
+after adding    22, map = { (22->foo22) (112->boo112) (33->foo33) (53->boo53) (56->foo56) (-9->boo-9) (29->boo29) }, size = 7, ContainsKey(22)? True
+after adding    19, map = { (22->foo22) (29->boo29) (-9->boo-9) (112->boo112) (53->boo53) (33->foo33) (56->foo56) (19->foo19) }, size = 8, ContainsKey(19)? True
+after adding    41, map = { (41->foo41) (22->foo22) (29->boo29) (-9->boo-9) (112->boo112) (53->boo53) (33->foo33) (56->foo56) (19->foo19) }, size = 9, ContainsKey(41)? True
+after adding   104, map = { (41->foo41) (22->foo22) (104->foo104) (29->boo29) (-9->boo-9) (112->boo112) (53->boo53) (33->foo33) (56->foo56) (19->foo19) }, size = 10, ContainsKey(104)? True
+after adding    -2, map = { (41->foo41) (-2->foo-2) (22->foo22) (104->foo104) (29->boo29) (-9->boo-9) (112->boo112) (53->boo53) (33->foo33) (56->foo56) (19->foo19) }, size = 11, ContainsKey(-2)? True
+after adding    97, map = { (41->foo41) (-2->foo-2) (22->foo22) (104->foo104) (29->boo29) (-9->boo-9) (112->boo112) (53->boo53) (33->foo33) (56->foo56) (97->foo97) (19->foo19) }, size = 12, ContainsKey(97)? True
+after adding    97, map = { (41->foo41) (-2->foo-2) (22->foo22) (104->foo104) (29->boo29) (-9->boo-9) (112->boo112) (53->boo53) (33->foo33) (56->foo56) (97->foo97) (19->foo19) }, size = 12, ContainsKey(97)? True
+after adding    22, map = { (41->foo41) (-2->foo-2) (22->foo22) (104->foo104) (29->boo29) (-9->boo-9) (112->boo112) (53->boo53) (33->foo33) (56->foo56) (97->foo97) (19->foo19) }, size = 12, ContainsKey(22)? True
+after adding   984, map = { (41->foo41) (-2->foo-2) (22->foo22) (984->foo984) (104->foo104) (29->boo29) (-9->boo-9) (112->boo112) (53->boo53) (33->foo33) (56->foo56) (97->foo97) (19->foo19) }, size = 13, ContainsKey(984)? True
+after adding  -797, map = { (41->foo41) (-2->foo-2) (22->foo22) (984->foo984) (104->foo104) (29->boo29) (-9->boo-9) (112->boo112) (53->boo53) (33->foo33) (56->foo56) (-797->foo-797) (97->foo97) (19->foo19) }, size = 14, ContainsKey(-797)? True
+after adding    66, map = { (41->foo41) (-2->foo-2) (22->foo22) (984->foo984) (104->foo104) (66->foo66) (29->boo29) (-9->boo-9) (112->boo112) (53->boo53) (33->foo33) (56->foo56) (-797->foo-797) (97->foo97) (19->foo19) }, size = 15, ContainsKey(66)? True
+after adding    33, map = { (41->foo41) (-2->foo-2) (22->foo22) (984->foo984) (104->foo104) (66->foo66) (29->boo29) (-9->boo-9) (112->boo112) (53->boo53) (33->foo33) (56->foo56) (-797->foo-797) (97->foo97) (19->foo19) }, size = 15, ContainsKey(33)? True
+after adding 90210, map = { (41->foo41) (-2->foo-2) (-9->boo-9) (90210->foo90210) (53->boo53) (56->foo56) (97->foo97) (19->foo19) (22->foo22) (104->foo104) (984->foo984) (66->foo66) (29->boo29) (112->boo112) (33->foo33) (-797->foo-797) }, size = 16, ContainsKey(90210)? True
+after adding 44444, map = { (41->foo41) (-2->foo-2) (44444->foo44444) (-9->boo-9) (90210->foo90210) (53->boo53) (56->foo56) (97->foo97) (19->foo19) (22->foo22) (104->foo104) (984->foo984) (66->foo66) (29->boo29) (112->boo112) (33->foo33) (-797->foo-797) }, size = 17, ContainsKey(44444)? True
+
+Test Keys:
+Keys = { 41 -2 44444 -9 90210 53 56 97 19 22 104 984 66 29 112 33 -797 }
+Test Clear:
+after clear #1, map = { }, size = 0, IsEmpty = True
+after clear #2, map = { }, size = 0, IsEmpty = True
+Test Keys:
+Keys = { }
