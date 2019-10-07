@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HashMap", "HashMap.csproj", "{93D79093-7A48-4EB1-B4FF-6215CFABBB1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestMap", "..\TestMap\TestMap.csproj", "{75577513-AC3A-479B-9DBF-57F59D34F31F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{93D79093-7A48-4EB1-B4FF-6215CFABBB1F} = {93D79093-7A48-4EB1-B4FF-6215CFABBB1F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +20,10 @@ Global
 		{93D79093-7A48-4EB1-B4FF-6215CFABBB1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93D79093-7A48-4EB1-B4FF-6215CFABBB1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93D79093-7A48-4EB1-B4FF-6215CFABBB1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75577513-AC3A-479B-9DBF-57F59D34F31F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75577513-AC3A-479B-9DBF-57F59D34F31F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75577513-AC3A-479B-9DBF-57F59D34F31F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75577513-AC3A-479B-9DBF-57F59D34F31F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

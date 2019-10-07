@@ -14,8 +14,6 @@ namespace HashMap
         private static int DEFAULT_LENGTH = 10; // default LENGTH for HashMap
 
         private Node[] elements;
-        private ICollection<TKey> keys;
-        private ICollection<TValue> values;
         private int count;
 
         // Default construction: construct an empty HashMap
@@ -23,8 +21,6 @@ namespace HashMap
         {
             elements = new Node[DEFAULT_LENGTH];
             count = 0;
-            keys = new List<TKey>();
-            values = new List<TValue>();
         }
 
         // Accessor of how many pairs of key/value in HashMap
@@ -33,17 +29,44 @@ namespace HashMap
             get { return count; }
         }
 
-        // Get accessor of retrieving all keys in HashMap
-        public ICollection<TKey> Keys
+        // Get accessor for retrieving all keys in HashMap
+        public ISet<TKey> Keys
         {
-            get { return keys; }
+            get
+            {
+                ISet<TKey> keys = new HashSet<TKey>();
+                foreach (Node index in elements)
+                {
+                    Node current = index;
+                    while (current != null)
+                    {
+                        keys.Add(current.key);
+                        current = current.next;
+                    }
+                }
+                return keys;
+            }
         }
 
-        // Get accessor of retrieving all values in HashMap
-        public ICollection<TValue> Values
+        // Get accessor for retrieving all values in HashMap
+        public ISet<TValue> Values
         {
-            get { return values; }
+            get
+            {
+                ISet<TValue> values = new HashSet<TValue>();
+                foreach (Node index in elements)
+                {
+                    Node current = index;
+                    while (current != null)
+                    {
+                        values.Add(current.value);
+                        current = current.next;
+                    }
+                }
+                return values;
+            }
         }
+
 
         // Get and set accessor of the value corresponding to given key 
         public TValue this[TKey key]
@@ -74,8 +97,6 @@ namespace HashMap
                 elements[i] = null;
             }
             count = 0;
-            keys.Clear();
-            values.Clear();
         }
 
         // Pre: The key passed in shoule not be null; otherwise, throws an NullReferenceException
@@ -182,24 +203,17 @@ namespace HashMap
         public string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("{");
-            for (int i = 0; i < elements.Length; i++)
-            {
-                if (elements[i] != null)
+            sb.Append("{ ");
+            foreach (Node index in elements) {
+                Node current = index;
+                while (current != null)
                 {
-                    Node current = elements[i];
-                    while (current.next != null)
-                    {
-                        sb.Append(current.key);
-                        sb.Append("=");
-                        sb.Append(current.value);
-                        sb.Append(", ");
-                        current = current.next;
-                    }
+                    sb.Append("(");
                     sb.Append(current.key);
-                    sb.Append("=");
+                    sb.Append("->");
                     sb.Append(current.value);
-                    sb.Append(", ");
+                    sb.Append(") ");
+                    current = current.next;
                 }
             }
             sb.Append("}");
